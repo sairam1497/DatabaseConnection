@@ -9,23 +9,24 @@ namespace DatabaseConnection
         static void Main(string[] args)
         {
 
-            //string connectionString= $@"Data Source = Error; Initial Catalog = Error;Connection Timeout = 5 ;  Persist Security Info = True; user id = sa; password = p10father_25587; MultipleActiveResultSets = True";
+            
             string connectionString = $@"Data Source = DESKTOP-FKSO33P\SQLEXPRESS; Initial Catalog = DigitalsoftFactory; Persist Security Info = True; user id = sa; password = p10father_25587; MultipleActiveResultSets = True";
             try
             {
                 using (SqlConnection cnn = new SqlConnection(connectionString))
                 {
-                    //open the connection 
-                    cnn.Open();
-                    // Get Connection details 
-                    string connectionDetails = GetConnectionProperties(cnn);
-                    Console.WriteLine(connectionDetails);
+                    string query = "Select count(*) from machine ";
+                    using (SqlCommand cmd = new SqlCommand(query,cnn))
+                    {
+                        cnn.Open();
+                      int count = (int)cmd.ExecuteScalar();
+                        Console.WriteLine(count);
+                    }
                 }
             }
             catch(Exception exc)
             {
                 Console.WriteLine(exc);
-
             }
             finally{
                 Console.ReadLine();
@@ -45,5 +46,8 @@ namespace DatabaseConnection
             sb.AppendLine("WorkStation Id : " + cnn.WorkstationId);
             return sb.ToString();
         }
+
+        
+
     }
 }
