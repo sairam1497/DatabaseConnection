@@ -16,15 +16,21 @@ namespace DatabaseConnection
             {
                 using (SqlConnection cnn = new SqlConnection(connectionString))
                 {
-                    //string query = "Insert Into RegCfg  values ('WIP','CP02','100',0)";
-                    string query = $@"update RegCfg 
-                                        set Value = 101
-                                        where App='WIP' and Id like 'CP0%' and value = 100";
+                   // string query = "select  value from RegCfg where App= @App and Id like @Id";
+                    string query = "Insert Into RegCfg  values (@App,@Id,@Value,@Reload)";
+                    //string query = $@"update RegCfg 
+                    //                    set Value = 101
+                    //                    where App='WIP' and Id like 'CP0%' and value = 100";
                     //string query = "Delete  RegCfg where App='WIP' and Id like 'CP0%' and value = 100";
                     using (SqlCommand cmd = new SqlCommand(query,cnn))
                     {
                       cmd.CommandType = CommandType.Text;
-                      cnn.Open();
+                        cmd.Parameters.Add(new SqlParameter("@App","WIP"));
+                        cmd.Parameters.Add(new SqlParameter("@Id", "CP03"));
+                        cmd.Parameters.Add(new SqlParameter("@Value","200"));
+                        cmd.Parameters.Add(new SqlParameter("@Reload","0"));
+
+                        cnn.Open();
                       int RowsAffected = (int)cmd.ExecuteNonQuery();
                         Console.WriteLine(RowsAffected);
                     }
