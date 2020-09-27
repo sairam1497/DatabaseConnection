@@ -11,18 +11,14 @@ namespace DatabaseConnection
 
             string connectionString= $@"Data Source = DESKTOP-FKSO33P\SQLEXPRESS; Initial Catalog = DigitalsoftFactory; Persist Security Info = True; user id = sa; password = p10father_25587; MultipleActiveResultSets = True";
 
-            //Creating a sql connection object 
-            SqlConnection cnn = new SqlConnection(connectionString);
-            //open the connection 
-            cnn.Open();
-            // Get Connection details 
-            string connectionDetails = GetConnectionProperties(cnn);
-            //close the connection 
-            cnn.Close();
-            //dispose the connection 
-            cnn.Dispose();
-            // print the connection details 
-            Console.WriteLine(connectionDetails);
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                //open the connection 
+                cnn.Open();
+                // Get Connection details 
+                string connectionDetails = GetConnectionProperties(cnn);
+                Console.WriteLine(connectionDetails);                
+            }
             Console.ReadLine();
         }
 
