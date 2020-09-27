@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -15,12 +16,17 @@ namespace DatabaseConnection
             {
                 using (SqlConnection cnn = new SqlConnection(connectionString))
                 {
-                    string query = "Select count(*) from machine ";
+                    //string query = "Insert Into RegCfg  values ('WIP','CP02','100',0)";
+                    string query = $@"update RegCfg 
+                                        set Value = 101
+                                        where App='WIP' and Id like 'CP0%' and value = 100";
+                    //string query = "Delete  RegCfg where App='WIP' and Id like 'CP0%' and value = 100";
                     using (SqlCommand cmd = new SqlCommand(query,cnn))
                     {
-                        cnn.Open();
-                      int count = (int)cmd.ExecuteScalar();
-                        Console.WriteLine(count);
+                      cmd.CommandType = CommandType.Text;
+                      cnn.Open();
+                      int RowsAffected = (int)cmd.ExecuteNonQuery();
+                        Console.WriteLine(RowsAffected);
                     }
                 }
             }
