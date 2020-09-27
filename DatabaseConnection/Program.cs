@@ -9,17 +9,28 @@ namespace DatabaseConnection
         static void Main(string[] args)
         {
 
-            string connectionString= $@"Data Source = DESKTOP-FKSO33P\SQLEXPRESS; Initial Catalog = DigitalsoftFactory; Persist Security Info = True; user id = sa; password = p10father_25587; MultipleActiveResultSets = True";
-
-            using (SqlConnection cnn = new SqlConnection(connectionString))
+            //string connectionString= $@"Data Source = Error; Initial Catalog = Error;Connection Timeout = 5 ;  Persist Security Info = True; user id = sa; password = p10father_25587; MultipleActiveResultSets = True";
+            string connectionString = $@"Data Source = DESKTOP-FKSO33P\SQLEXPRESS; Initial Catalog = DigitalsoftFactory; Persist Security Info = True; user id = sa; password = p10father_25587; MultipleActiveResultSets = True";
+            try
             {
-                //open the connection 
-                cnn.Open();
-                // Get Connection details 
-                string connectionDetails = GetConnectionProperties(cnn);
-                Console.WriteLine(connectionDetails);                
+                using (SqlConnection cnn = new SqlConnection(connectionString))
+                {
+                    //open the connection 
+                    cnn.Open();
+                    // Get Connection details 
+                    string connectionDetails = GetConnectionProperties(cnn);
+                    Console.WriteLine(connectionDetails);
+                }
             }
-            Console.ReadLine();
+            catch(Exception exc)
+            {
+                Console.WriteLine(exc);
+
+            }
+            finally{
+                Console.ReadLine();
+            }
+            
         }
 
         public static string GetConnectionProperties(SqlConnection cnn)
